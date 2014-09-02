@@ -25,6 +25,16 @@ matr::~matr(){
     delete []fData;
 }
 
+matr::matr( const matr& rvalue ){
+    fData = new float* [rvalue.rows];
+    for(int i = 0; i < rvalue.rows; ++i)
+        fData[i] = new float[rvalue.columns];
+    for(int i = 0; i < rvalue.rows; ++i){
+        for(int j = 0; j < rvalue.columns; ++j)
+            fData[i][j] = rvalue.fData[i][j];
+    }
+}
+
 void matr::setMatrix(int x, int y, float data){
     if( x < 0 || x > rows )
         x = 0;
