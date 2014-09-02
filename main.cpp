@@ -20,14 +20,15 @@ int main()
     //(a * n).getMatrix();
     //a.~matr();
     //b.~matr();
-    matr s(4, 4), d(4, 4), m(4, 4);
+    matr s(2, 2);
     cin >> a;
     cin >> b;
     cout << a;
     cout << b;
     //s = a + b;
     //(a*b).getMatrix();
-    s = a * b;
+    a = a + b;
+    cout << a;
    // cout << m;
     //(a - b).getMatrix();
     //cout << s << endl;
