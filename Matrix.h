@@ -13,10 +13,12 @@ class matr{
 public:
     matr(int = 1, int = 1);
     ~matr();
+    matr(const matr& rvalue);
     void setMatrix(int, int, float);
     void fillMatrix();
     void getMatrix();
 
+    matr operator=(const matr& rvalue);
     matr operator-(const matr&)const;
     matr operator+(const matr&)const;
    // matr operator*(int&);

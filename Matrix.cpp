@@ -3,7 +3,7 @@
 using namespace std;
 
 matr::matr(int x, int y){
-    if( !x || !y){
+    if( !x || !y ){
         x = 1; y = 1;}
     if( x == 0 || y == 0 ){
         x = 1; y = 1;
@@ -25,6 +25,33 @@ matr::~matr(){
     delete []fData;
 }
 
+matr::matr(const matr& rvalue){
+    float** fData;
+    rows = rvalue.rows;
+    columns = rvalue.columns;
+    fData = new float* [rows];
+    for(int i = 0; i < rows; ++i)
+        fData[i] = new float[columns];
+    for(int i = 0; i < rvalue.rows; ++i){
+        for(int j = 0; j < rvalue.columns; ++j)
+            fData[i][j] = rvalue.fData[i][j];
+    }
+}
+
+matr matr::operator=(const matr& rvalue){
+        float** new_matrix = new float*[rvalue.rows];
+        for(int i = 0; i < rvalue.rows; ++i)
+            new_matrix[i] = new float[rvalue.columns];
+        copy(rvalue.fData, rvalue.fData + rvalue.rows + rvalue.columns, new_matrix);
+        for(int i = 0; i < rvalue.rows; ++i)
+            delete fData[i];
+        delete []fData;
+        fData = new_matrix;
+        rows = rvalue.rows;
+        columns = rvalue.columns;
+    return (*this);
+}
+/*
 void matr::setMatrix(int x, int y, float data){
     if( x < 0 || x > rows )
         x = 0;
@@ -32,7 +59,7 @@ void matr::setMatrix(int x, int y, float data){
         y = 0;
     fData[x][y] = data;
 }
-
+*/
 matr matr::operator+(const matr& rvalue)const{
     matr temp(*this);              // temporary matrix;
     for(int i = 0; i < rows; ++i){
@@ -75,6 +102,7 @@ matr matr::operator*(const matr& rvalue)const{
     }
     return temp1;
 }
+/*
 void matr::fillMatrix(){
     cout << "Enter elements of matrix: " << endl;
     for(int i = 0; i < rows; ++i){
@@ -93,7 +121,7 @@ void matr::getMatrix(){
         cout << endl;
     }
 }
-
+*/
 istream &operator>>(istream& stream_in, matr& rvalue){
     cout << "Enter elements of matrix: " << endl;
     for(int i = 0; i < rvalue.rows; ++i){
