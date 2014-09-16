@@ -2,7 +2,7 @@
 #include <Matrix.h>
 using namespace std;
 
-matr::matr(int x, int y){
+matr::matr( int x, int y ){
     if( !x || !y ){
         x = 1; y = 1;}
     if( x == 0 || y == 0 ){
@@ -25,30 +25,33 @@ matr::~matr(){
     delete []fData;
 }
 
-matr::matr(const matr& rvalue){
-    float** fData;
+matr::matr( const matr& rvalue ){
     rows = rvalue.rows;
     columns = rvalue.columns;
     fData = new float* [rows];
     for(int i = 0; i < rows; ++i)
         fData[i] = new float[columns];
-    for(int i = 0; i < rvalue.rows; ++i){
-        for(int j = 0; j < rvalue.columns; ++j)
+    for(int i = 0; i < rows; ++i){
+        for(int j = 0; j < columns; ++j)
             fData[i][j] = rvalue.fData[i][j];
     }
 }
 
-matr matr::operator=(const matr& rvalue){
-        float** new_matrix = new float*[rvalue.rows];
-        for(int i = 0; i < rvalue.rows; ++i)
-            new_matrix[i] = new float[rvalue.columns];
-        copy(rvalue.fData, rvalue.fData + rvalue.rows + rvalue.columns, new_matrix);
-        for(int i = 0; i < rvalue.rows; ++i)
+matr matr::operator=( const matr& rvalue ){
+    rows = rvalue.rows;
+    columns = rvalue.columns;
+    float** new_matrix = new float*[rows];
+        for(int i = 0; i < rows; ++i)
+            new_matrix[i] = new float[columns];
+        //copy(rvalue.fData, rvalue.fData + rvalue.rows + rvalue.columns, new_matrix);
+        for(int i = 0; i < rows; ++i){
+                for(int j = 0; j < columns; ++j)
+                    new_matrix[i][j] = rvalue.fData[i][j];
+        }
+        for(int i = 0; i < rows; ++i)
             delete fData[i];
         delete []fData;
         fData = new_matrix;
-        rows = rvalue.rows;
-        columns = rvalue.columns;
     return (*this);
 }
 /*
@@ -60,7 +63,7 @@ void matr::setMatrix(int x, int y, float data){
     fData[x][y] = data;
 }
 */
-matr matr::operator+(const matr& rvalue)const{
+matr matr::operator+( const matr& rvalue )const{
     matr temp(*this);              // temporary matrix;
     for(int i = 0; i < rows; ++i){
         for(int j = 0; j < columns; ++j)
@@ -69,7 +72,7 @@ matr matr::operator+(const matr& rvalue)const{
     return temp;
 }
 
-matr matr::operator-(const matr& rvalue)const{
+matr matr::operator-( const matr& rvalue )const{
     matr temp(*this);
     for(int i = 0; i < rows; ++i){
         for(int j = 0; j < columns; ++j)
@@ -77,17 +80,17 @@ matr matr::operator-(const matr& rvalue)const{
     }
     return temp;
 }
-/*
-matr matr::operator*(int& n){
+
+matr matr::operator*(int& multiplier){
     matr temp(*this);
     for(int i = 0; i < rows; ++i){
         for(int j = 0; j < columns; ++j)
-            temp.fData[i][j] = temp.fData[i][j] * n;
+            temp.fData[i][j] = temp.fData[i][j] * multiplier;
     }
     return temp;
 }
-*/
-matr matr::operator*(const matr& rvalue)const{
+
+matr matr::operator*( const matr& rvalue )const{
     matr temp(*this);
     matr temp1(rows, columns);
     for(int i = 0; i < rows; ++i){
@@ -102,27 +105,8 @@ matr matr::operator*(const matr& rvalue)const{
     }
     return temp1;
 }
-/*
-void matr::fillMatrix(){
-    cout << "Enter elements of matrix: " << endl;
-    for(int i = 0; i < rows; ++i){
-        for(int j = 0; j < columns; ++j)
-            cin >> fData[i][j];
-        cout << endl;
-    }
 
-}
-
-void matr::getMatrix(){
-    cout << "Matrix is: " << endl;
-    for(int i = 0; i < rows; ++i){
-        for(int j = 0; j < columns; ++j)
-            cout << fData[i][j] << " ";
-        cout << endl;
-    }
-}
-*/
-istream &operator>>(istream& stream_in, matr& rvalue){
+istream &operator>>( istream& stream_in, matr& rvalue ){
     cout << "Enter elements of matrix: " << endl;
     for(int i = 0; i < rvalue.rows; ++i){
         for(int j = 0; j < rvalue.columns;++j)
@@ -132,7 +116,7 @@ istream &operator>>(istream& stream_in, matr& rvalue){
     return stream_in;
 }
 
-ostream &operator<<(ostream& stream_out, matr& rvalue ){
+ostream &operator<<( ostream& stream_out, matr& rvalue ){
     cout << "Matrix is: " << endl;
     for(int i = 0; i < rvalue.rows; ++i){
         for(int j = 0; j < rvalue.columns;++j)

@@ -8,21 +8,19 @@ class matr{
     int columns;
     float **fData;
 
-    friend istream &operator>>(istream&, matr& );
-    friend ostream &operator<<(ostream&, matr& );
+    friend istream &operator>>( istream& stream_in, matr& rvalue );
+    friend ostream &operator<<( ostream& stream_out, matr& rvalue );
 public:
     matr(int = 1, int = 1);
     ~matr();
     matr(const matr& rvalue);
-    void setMatrix(int, int, float);
-    void fillMatrix();
-    void getMatrix();
+    void setMatrix( int row, int column, float rvalue );
 
-    matr operator=(const matr& rvalue);
-    matr operator-(const matr&)const;
-    matr operator+(const matr&)const;
-   // matr operator*(int&);
-    matr operator*(const matr&)const;
+    matr operator=( const matr& rvalue );
+    matr operator-( const matr& rvalue )const;
+    matr operator+( const matr& rvalue )const;
+    matr operator*(int& multiplier);
+    matr operator*( const matr& rvalue )const;
 };
 
 #endif // MATRIX_H
